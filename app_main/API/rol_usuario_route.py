@@ -13,7 +13,8 @@ def agregar(usuario_actual):
     try:
         if controlador_rol_usuario.agregar(
                 request.json["nombre"],
-                request.json["descripcion"]
+                request.json["descripcion"],
+                usuario_actual._id
             ):
             return jsonify({
                     "estado" : "OK",
@@ -50,7 +51,8 @@ def modificar(usuario_actual):
         if controlador_rol_usuario.modificar(
                 request.json["_id"],
                 request.json["nombre"],
-                request.json["descripcion"]
+                request.json["descripcion"],
+                usuario_actual._id
             ):
             return jsonify({
                     "estado" : "OK",
@@ -83,7 +85,7 @@ def desactivar(usuario_actual):
                 "estado" : "ADVERTENCIA",
                 "mensaje": "Ha ocurrido un error, es necesario proporcionar un id de rol para desactivar"
             })
-        if controlador_rol_usuario.desactivar(request.json["_id"]):
+        if controlador_rol_usuario.desactivar(request.json["_id"],usuario_actual._id):
             return jsonify({
                 "estado" : "OK",
                 "mensaje": "Rol desactivado correctamente"
@@ -114,7 +116,7 @@ def reactivar(usuario_actual):
                 "estado" : "ADVERTENCIA",
                 "mensaje": "Ha ocurrido un error, es necesario proporcionar un id de rol para reactivar"
             })
-        if controlador_rol_usuario.reactivar(request.json["_id"]):
+        if controlador_rol_usuario.reactivar(request.json["_id"],usuario_actual._id):
             return jsonify({
                 "estado" : "OK",
                 "mensaje": "Rol reactivado correctamente"
